@@ -1,75 +1,122 @@
-# React + TypeScript + Vite
+# Table Tennis Engine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A highly detailed, browser based table tennis simulation engine built with **React**, **TypeScript**, and **Vite** for the Avium RP, as well as others to use.
 
-Currently, two official plugins are available:
+The goal of this project is to simulate table tennis matches with a high degree of realism while remaining completely moddable. Rather than relying on arbitrary ratings or hidden bonuses, every point is intended to be the result of player ability, equipment, tactics, psychology, match conditions, and controlled randomness.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Project Goals
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Build a detailed point-by-point table tennis simulation.
+- Support fictional countries, players, and tournaments.
+- Support multiple historical eras and custom rulesets.
+- Allow complete customisation of equipment, playstyles, and competitions.
+- Provide transparent calculations so every match result can be explained.
+- Separate the simulation engine from the user interface to allow future desktop, web, or API integrations.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Current Features
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Project Foundation
+- React + TypeScript + Vite
+- React Router navigation
+- ESLint configuration
+- Modular project architecture
+- Git version control
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Domain Model
+- Shared foundation types
+- Universal rating system
+- Player attribute architecture
+- Equipment system
+- Validation utilities
+- Derived attribute calculations
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
 
-```
+## Planned Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Core Engine
+- Rule and era system
+- Player model
+- Country model
+- Playstyle system
+- Equipment familiarity
+- Tactical system
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Match Simulation
+- Serve engine
+- Rally engine
+- Shot selection
+- Shot resolution
+- Fatigue simulation
+- Confidence and momentum
+- Positioning
+- Spin simulation
+- Equipment effects
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Competition
+- Tournament engine
+- League engine
+- Team competitions
+- Rankings
+- Career statistics
 
-```
+### Analysis
+- Detailed match statistics
+- Rally history
+- Heat maps
+- Commentary
+- Developer calculation mode
+
+---
+
+## Project Mindset
+
+This engine follows several guiding principles:
+
+- Simulation first, interface second.
+- Every attribute must have a measurable purpose.
+- No hidden bonuses or unexplained modifiers.
+- Every point should be explainable.
+- Derived values should be calculated rather than stored.
+- The engine should be moddable and extensible.
+- Historical and fictional settings should both be supported.
+
+---
+
+## Technology Stack
+
+- React
+- TypeScript
+- Vite
+- React Router
+- ESLint
+
+---
+
+## Development Status
+
+Current Stage:
+
+- Stage 1 — Project Setup
+- Stage 2.1 — Foundation Types
+- Stage 2.2 — Attribute Architecture
+- Stage 2.3 — Equipment Models
+- Stage 2.4 — Rules & Era System (In Progress)
+
+---
+
+## Long-Term Vision
+
+The long term goal is to create one of the most detailed and transparent table tennis simulation engines available.
+
+Rather than simply producing scores, the engine aims to simulate why each point occurred by modelling player ability, equipment, tactics, psychology, fatigue, and decision-making at every stage of a rally.
+
+---
+
+## License
+
+This project is currently under active development.
