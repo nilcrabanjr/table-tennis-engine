@@ -14,6 +14,8 @@ export interface RacquetComposition {
 
 /**
  * A saved racquet setup.
+ *
+ * Player-specific familiarity is stored in the player's equipment profile.
  */
 export interface Racquet {
   id: EntityId;
@@ -29,13 +31,6 @@ export interface Racquet {
    * 100 means excellent condition.
    */
   condition: Rating;
-
-  /**
-   * Familiarity belongs to a player's relationship with the racquet rather
-   * than the equipment itself. This value is included here only for saved
-   * personal loadouts and will later be separated when the Player model exists.
-   */
-  familiarity: Rating;
 
   builtIn: boolean;
 }

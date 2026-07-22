@@ -79,7 +79,6 @@ export const DEFAULT_RACQUET: Racquet = {
   },
 
   condition: 100,
-  familiarity: 75,
 
   builtIn: true,
 };

@@ -25,6 +25,21 @@ export const COMPETITION_CATEGORIES = [
   "open",
 ] as const;
 
+/**
+ * Category in which an individual player normally competes.
+ *
+ * "mixed" is not included because mixed describes a competition or pair,
+ * rather than an individual player's usual category.
+ */
+export const PLAYER_CATEGORIES = [
+  "men",
+  "women",
+  "open",
+] as const;
+
+export type PlayerCategory =
+  (typeof PLAYER_CATEGORIES)[number];
+
 export type CompetitionCategory =
   (typeof COMPETITION_CATEGORIES)[number];
 

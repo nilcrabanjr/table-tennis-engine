@@ -67,6 +67,7 @@ export function calculateEquipmentEffects(
   blade: Blade,
   forehandRubber: Rubber,
   backhandRubber: Rubber,
+  familiarity: Rating = 50,
 ): EquipmentEffects {
   const averageRubberSpeed = average(
     forehandRubber.speed,
@@ -89,7 +90,7 @@ export function calculateEquipmentEffects(
   );
 
   const conditionMultiplier = 0.75 + racquet.condition / 400;
-  const familiarityMultiplier = 0.80 + racquet.familiarity / 500;
+  const familiarityMultiplier = 0.80 + familiarity / 500;
 
   const speed = clampRating(
     weightedAverage([
@@ -165,7 +166,7 @@ export function calculateEquipmentEffects(
     [blade.sweetSpot, 0.36],
     [blade.control, 0.24],
     [averageRubberControl, 0.24],
-    [racquet.familiarity, 0.16],
+    [familiarity, 0.16],
   ]);
 
   const totalWeightGrams =

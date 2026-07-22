@@ -243,13 +243,6 @@ export function validateRacquet(
     });
   }
 
-  if (!isValidRating(racquet.familiarity)) {
-    errors.push({
-      path: "racquet.familiarity",
-      message: "Familiarity must be a whole number between 0 and 100.",
-    });
-  }
-
   return {
     valid: errors.length === 0,
     errors,
