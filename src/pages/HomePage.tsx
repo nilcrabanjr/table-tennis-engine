@@ -1,53 +1,47 @@
 import {
-  DEFAULT_BACKHAND_RUBBER,
-  DEFAULT_BLADE,
-  DEFAULT_FOREHAND_RUBBER,
-  DEFAULT_RACQUET,
-  calculateDerivedAttributes,
-  calculateEquipmentEffects,
-  createDefaultPlayer,
-  describeRating,
-  getPlayerDisplayName,
-  getPrimaryRacquetAssignment,
-  validatePlayer,
+  createDefaultCountryIdentity,
+  createDefaultDemographicsProfile,
+  createDefaultGeographyProfile,
+  getCountryDisplayName,
+  validateCountryIdentity,
+  validateDemographicsProfile,
+  validateGeographyProfile,
 } from "../domain";
 
 export function HomePage() {
-  const player = createDefaultPlayer(
-    "player-test-001",
-    "country-test-001",
+  const identity = createDefaultCountryIdentity(
+    "country-newland",
   );
 
-  player.identity.firstName = "Aleksandr";
-  player.identity.lastName = "Varek";
-  player.identity.nickname = "The Falcon";
+  const geography = createDefaultGeographyProfile();
+  const demographics = createDefaultDemographicsProfile();
 
-  player.attributes.technical.forehandAttack = 86;
-  player.attributes.technical.serveQuality = 80;
-  player.attributes.technical.serveDeception = 84;
+  identity.officialName = "Republic of Melvaria";
+  identity.shortName = "Melvaria";
+  identity.adjective = "Melvarian";
+  identity.threeLetterCode = "MEL";
+  identity.twoLetterCode = "MV";
+  identity.capital = "Aurelis";
 
-  player.attributes.physical.footwork = 78;
-  player.attributes.mental.composure = 82;
+  geography.areaSquareKm = 425_000;
+  geography.region = "Central Avium";
 
-  player.personality.riskTaking = 72;
-  player.personality.competitiveness = 88;
+  demographics.population = 38_500_000;
+  demographics.registeredTableTennisPlayers = 180_000;
 
-  const validation = validatePlayer(player);
+  const identityValidation =
+    validateCountryIdentity(identity);
 
-  const derived = calculateDerivedAttributes(
-    player.attributes,
-  );
+  const geographyValidation =
+    validateGeographyProfile(geography);
 
-  const primaryRacquet =
-    getPrimaryRacquetAssignment(player.equipment);
+  const demographicsValidation =
+    validateDemographicsProfile(demographics);
 
-  const equipmentEffects = calculateEquipmentEffects(
-    DEFAULT_RACQUET,
-    DEFAULT_BLADE,
-    DEFAULT_FOREHAND_RUBBER,
-    DEFAULT_BACKHAND_RUBBER,
-    primaryRacquet?.familiarity ?? 50,
-  );
+  const valid =
+    identityValidation.valid
+    && geographyValidation.valid
+    && demographicsValidation.valid;
 
   return (
     <section className="page">
@@ -59,70 +53,41 @@ export function HomePage() {
       </p>
 
       <div className="placeholder-panel">
-        <h2>Player model</h2>
-
-        <p>
-          Identity, attributes, personality, playstyle, equipment,
-          career, and availability are now represented.
-        </p>
+        <h2>Country foundation</h2>
 
         <dl>
-          <dt>Player valid</dt>
-          <dd>{validation.valid ? "Yes" : "No"}</dd>
+          <dt>Country valid</dt>
+          <dd>{valid ? "Yes" : "No"}</dd>
 
           <dt>Name</dt>
-          <dd>{getPlayerDisplayName(player.identity)}</dd>
+          <dd>{getCountryDisplayName(identity)}</dd>
 
-          <dt>Country ID</dt>
-          <dd>{player.countryId}</dd>
+          <dt>Official name</dt>
+          <dd>{identity.officialName}</dd>
 
-          <dt>Grip</dt>
-          <dd>{player.biography.grip}</dd>
+          <dt>Adjective</dt>
+          <dd>{identity.adjective}</dd>
 
-          <dt>Primary playstyle</dt>
-          <dd>{player.playstyle.primaryPlaystyleId}</dd>
+          <dt>Code</dt>
+          <dd>{identity.threeLetterCode}</dd>
 
-          <dt>Overall rating</dt>
+          <dt>Capital</dt>
+          <dd>{identity.capital}</dd>
+
+          <dt>Region</dt>
+          <dd>{geography.region}</dd>
+
+          <dt>Area</dt>
+          <dd>{geography.areaSquareKm.toLocaleString()} km²</dd>
+
+          <dt>Population</dt>
+          <dd>{demographics.population.toLocaleString()}</dd>
+
+          <dt>Registered players</dt>
           <dd>
-            {derived.overall}
-            {" — "}
-            {describeRating(derived.overall)}
+            {demographics.registeredTableTennisPlayers.toLocaleString()}
           </dd>
-
-          <dt>Forehand potential</dt>
-          <dd>
-            {derived.forehandAttackPotential}
-            {" — "}
-            {describeRating(derived.forehandAttackPotential)}
-          </dd>
-
-          <dt>Racquet familiarity</dt>
-          <dd>{primaryRacquet?.familiarity ?? "None"}</dd>
-
-          <dt>Equipment control</dt>
-          <dd>
-            {equipmentEffects.control}
-            {" — "}
-            {describeRating(equipmentEffects.control)}
-          </dd>
-
-          <dt>Availability</dt>
-          <dd>{player.availability.status}</dd>
         </dl>
-
-        {!validation.valid && (
-          <div>
-            <h3>Validation errors</h3>
-
-            <ul>
-              {validation.errors.map((error) => (
-                <li key={`${error.path}-${error.message}`}>
-                  {error.path}: {error.message}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </section>
   );
