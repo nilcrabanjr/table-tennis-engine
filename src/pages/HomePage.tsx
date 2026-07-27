@@ -1,121 +1,126 @@
 import {
-  createDefaultCoaching,
-  createDefaultCountryIdentity,
-  createDefaultCulture,
-  createDefaultDemographicsProfile,
-  createDefaultDevelopment,
-  createDefaultFederation,
-  createDefaultGeographyProfile,
+  createDefaultCountryPlayerPool,
+  createDefaultCountryRecords,
+  createDefaultDomesticCompetition,
+  createDefaultNationalTeamProfile,
   describeRating,
-  getCountryDisplayName,
-  validateCoaching,
-  validateCountryIdentity,
-  validateCulture,
-  validateDemographicsProfile,
-  validateDevelopment,
-  validateFederation,
-  validateGeographyProfile,
+  validateCountryPlayerPool,
+  validateCountryRecords,
+  validateDomesticCompetition,
+  validateNationalTeams,
 } from "../domain";
 
 export function HomePage() {
-  const identity = createDefaultCountryIdentity(
-    "country-melvaria",
-  );
+  const countryId = "country-melvaria";
 
-  const geography = createDefaultGeographyProfile();
-  const demographics = createDefaultDemographicsProfile();
+  const domestic =
+    createDefaultDomesticCompetition(countryId);
 
-  const federation = createDefaultFederation();
-  const coaching = createDefaultCoaching();
-  const development = createDefaultDevelopment();
-  const culture = createDefaultCulture();
+  const nationalTeams =
+    createDefaultNationalTeamProfile(countryId);
 
-  identity.officialName = "Republic of Melvaria";
-  identity.shortName = "Melvaria";
-  identity.adjective = "Melvarian";
-  identity.threeLetterCode = "MEL";
-  identity.twoLetterCode = "MV";
-  identity.capital = "Aurelis";
+  const playerPool =
+    createDefaultCountryPlayerPool();
 
-  geography.areaSquareKm = 425_000;
-  geography.region = "Central Avium";
+  const records =
+    createDefaultCountryRecords();
 
-  demographics.population = 38_500_000;
-  demographics.registeredTableTennisPlayers = 180_000;
+  if (domestic.primaryLeague) {
+    domestic.primaryLeague.name =
+      "Melvarian Premier Table Tennis League";
 
-  federation.id = "federation-melvaria";
-  federation.name = "Melvarian Table Tennis Federation";
-  federation.abbreviation = "MTTF";
-  federation.foundedYear = 1928;
-  federation.reputation = 86;
-  federation.administration = 78;
-  federation.financialStability = 82;
-  federation.internationalInfluence = 79;
-  federation.officiatingQuality = 84;
-  federation.transparency = 76;
+    domestic.primaryLeague.shortName = "MPTTL";
+    domestic.primaryLeague.clubCount = 16;
+    domestic.primaryLeague.divisionCount = 2;
 
-  coaching.technicalCoaching = 91;
-  coaching.tacticalCoaching = 88;
-  coaching.serveDevelopment = 94;
-  coaching.receiveDevelopment = 86;
-  coaching.footworkTraining = 89;
-  coaching.physicalConditioning = 81;
-  coaching.sportsPsychology = 74;
-  coaching.talentIdentification = 92;
-  coaching.coachEducation = 90;
-  coaching.innovation = 88;
+    domestic.primaryLeague.professionalism = 91;
+    domestic.primaryLeague.competitiveStrength = 88;
+    domestic.primaryLeague.internationalPrestige = 84;
+    domestic.primaryLeague.matchIntensity = 90;
+  }
 
-  development.youthAcademies = 93;
-  development.juniorCompetition = 90;
-  development.regionalCentres = 84;
-  development.scoutingNetwork = 91;
-  development.equipmentAccess = 87;
-  development.financialSupport = 82;
-  development.sportsScience = 76;
-  development.trainingIntensity = 89;
-  development.coachAvailability = 88;
-  development.pathwayToProfessional = 90;
+  domestic.nationalChampionship.name =
+    "Melvarian National Championships";
 
-  culture.tableTennisPopularity = 94;
-  culture.youthParticipation = 91;
-  culture.schoolPrograms = 88;
-  culture.universityPrograms = 79;
-  culture.governmentSupport = 87;
-  culture.mediaCoverage = 85;
-  culture.volunteerBase = 80;
-  culture.professionalInterest = 92;
-  culture.womenParticipation = 83;
-  culture.internationalAmbition = 95;
+  domestic.nationalChampionship.prestige = 92;
+  domestic.juniorCompetitionQuality = 90;
+  domestic.annualDomesticMatchVolume = 4_800;
 
-  const identityValidation =
-    validateCountryIdentity(identity);
+  nationalTeams.selectionQuality = 89;
+  nationalTeams.trainingCampQuality = 91;
+  nationalTeams.doublesPreparation = 86;
+  nationalTeams.travelSupport = 83;
 
-  const geographyValidation =
-    validateGeographyProfile(geography);
+  const primarySquad = nationalTeams.squads[0];
 
-  const demographicsValidation =
-    validateDemographicsProfile(demographics);
+  if (primarySquad) {
+    primarySquad.name = "Melvaria National Team";
+    primarySquad.cohesion = 84;
+    primarySquad.tacticalPreparation = 91;
+    primarySquad.morale = 88;
+    primarySquad.depth = 87;
+  }
 
-  const federationErrors =
-    validateFederation(federation);
+  playerPool.registeredPlayerIds = [
+    "player-varek",
+    "player-seran",
+    "player-kolos",
+  ];
 
-  const coachingErrors =
-    validateCoaching(coaching);
+  playerPool.internationallyEligiblePlayerIds = [
+    "player-varek",
+    "player-seran",
+    "player-kolos",
+  ];
 
-  const developmentErrors =
-    validateDevelopment(development);
+  playerPool.prospectPlayerIds = [
+    "player-kolos",
+  ];
 
-  const cultureErrors =
-    validateCulture(culture);
+  playerPool.playerPoolDepth = 88;
+  playerPool.elitePlayerDepth = 84;
+  playerPool.youthProspectQuality = 92;
+  playerPool.unmodelledCompetitivePlayers = 24_000;
+
+  records.internationalTeamMatchesPlayed = 120;
+  records.internationalTeamMatchesWon = 83;
+  records.internationalTeamMatchesLost = 37;
+
+  records.individualWorldTitles = 8;
+  records.doublesWorldTitles = 4;
+  records.teamWorldTitles = 6;
+
+  records.medals.gold = 18;
+  records.medals.silver = 12;
+  records.medals.bronze = 15;
+
+  records.highestWorldTeamRanking = 1;
+  records.longestTeamWinningStreak = 19;
+
+  const domesticValidation =
+    validateDomesticCompetition(domestic);
+
+  const nationalTeamValidation =
+    validateNationalTeams(nationalTeams);
+
+  const playerPoolValidation =
+    validateCountryPlayerPool(playerPool);
+
+  const recordsValidation =
+    validateCountryRecords(records);
 
   const valid =
-    identityValidation.valid
-    && geographyValidation.valid
-    && demographicsValidation.valid
-    && federationErrors.length === 0
-    && coachingErrors.length === 0
-    && developmentErrors.length === 0
-    && cultureErrors.length === 0;
+    domesticValidation.valid
+    && nationalTeamValidation.valid
+    && playerPoolValidation.valid
+    && recordsValidation.valid;
+
+  const errors = [
+    ...domesticValidation.errors,
+    ...nationalTeamValidation.errors,
+    ...playerPoolValidation.errors,
+    ...recordsValidation.errors,
+  ];
 
   return (
     <section className="page">
@@ -127,90 +132,70 @@ export function HomePage() {
       </p>
 
       <div className="placeholder-panel">
-        <h2>Country development system</h2>
+        <h2>Country competition system</h2>
 
         <p>
-          Federation quality, coaching, development pathways, and
-          national table tennis culture are now represented.
+          Domestic leagues, national teams, player pools, and country
+          records are now represented.
         </p>
 
         <dl>
-          <dt>Country valid</dt>
+          <dt>System valid</dt>
           <dd>{valid ? "Yes" : "No"}</dd>
 
-          <dt>Country</dt>
-          <dd>{getCountryDisplayName(identity)}</dd>
+          <dt>Primary league</dt>
+          <dd>{domestic.primaryLeague?.name ?? "None"}</dd>
 
-          <dt>Federation</dt>
-          <dd>{federation.name}</dd>
+          <dt>League clubs</dt>
+          <dd>{domestic.primaryLeague?.clubCount ?? 0}</dd>
 
-          <dt>Federation reputation</dt>
+          <dt>League strength</dt>
           <dd>
-            {federation.reputation}
+            {domestic.primaryLeague?.competitiveStrength ?? 0}
             {" — "}
-            {describeRating(federation.reputation)}
+            {describeRating(
+              domestic.primaryLeague?.competitiveStrength ?? 0,
+            )}
           </dd>
 
-          <dt>Technical coaching</dt>
+          <dt>National championship</dt>
+          <dd>{domestic.nationalChampionship.name}</dd>
+
+          <dt>Junior competition</dt>
           <dd>
-            {coaching.technicalCoaching}
+            {domestic.juniorCompetitionQuality}
             {" — "}
-            {describeRating(coaching.technicalCoaching)}
+            {describeRating(domestic.juniorCompetitionQuality)}
           </dd>
 
-          <dt>Serve development</dt>
+          <dt>National squad</dt>
+          <dd>{primarySquad?.name ?? "None"}</dd>
+
+          <dt>Squad tactical preparation</dt>
           <dd>
-            {coaching.serveDevelopment}
+            {primarySquad?.tacticalPreparation ?? 0}
             {" — "}
-            {describeRating(coaching.serveDevelopment)}
+            {describeRating(
+              primarySquad?.tacticalPreparation ?? 0,
+            )}
           </dd>
 
-          <dt>Youth academies</dt>
+          <dt>Modelled players</dt>
+          <dd>{playerPool.registeredPlayerIds.length}</dd>
+
+          <dt>Competitive player pool</dt>
           <dd>
-            {development.youthAcademies}
-            {" — "}
-            {describeRating(development.youthAcademies)}
+            {playerPool.unmodelledCompetitivePlayers.toLocaleString()}
           </dd>
 
-          <dt>Scouting network</dt>
-          <dd>
-            {development.scoutingNetwork}
-            {" — "}
-            {describeRating(development.scoutingNetwork)}
-          </dd>
+          <dt>World singles titles</dt>
+          <dd>{records.individualWorldTitles}</dd>
 
-          <dt>Pathway to professional</dt>
-          <dd>
-            {development.pathwayToProfessional}
-            {" — "}
-            {describeRating(development.pathwayToProfessional)}
-          </dd>
+          <dt>Team world titles</dt>
+          <dd>{records.teamWorldTitles}</dd>
 
-          <dt>Table tennis popularity</dt>
-          <dd>
-            {culture.tableTennisPopularity}
-            {" — "}
-            {describeRating(culture.tableTennisPopularity)}
-          </dd>
-
-          <dt>Government support</dt>
-          <dd>
-            {culture.governmentSupport}
-            {" — "}
-            {describeRating(culture.governmentSupport)}
-          </dd>
-
-          <dt>International ambition</dt>
-          <dd>
-            {culture.internationalAmbition}
-            {" — "}
-            {describeRating(culture.internationalAmbition)}
-          </dd>
-
-          <dt>Registered players</dt>
-          <dd>
-            {demographics.registeredTableTennisPlayers.toLocaleString()}
-          </dd>
+          <dt>Highest team ranking</dt>
+          <dd>{records.highestWorldTeamRanking ?? "Unranked"}</dd>
         </dl>
 
         {!valid && (
@@ -218,31 +203,10 @@ export function HomePage() {
             <h3>Validation errors</h3>
 
             <ul>
-              {identityValidation.errors.map((error) => (
+              {errors.map((error) => (
                 <li key={`${error.path}-${error.message}`}>
                   {error.path}: {error.message}
                 </li>
-              ))}
-
-              {geographyValidation.errors.map((error) => (
-                <li key={`${error.path}-${error.message}`}>
-                  {error.path}: {error.message}
-                </li>
-              ))}
-
-              {demographicsValidation.errors.map((error) => (
-                <li key={`${error.path}-${error.message}`}>
-                  {error.path}: {error.message}
-                </li>
-              ))}
-
-              {[
-                ...federationErrors,
-                ...coachingErrors,
-                ...developmentErrors,
-                ...cultureErrors,
-              ].map((error) => (
-                <li key={error}>{error}</li>
               ))}
             </ul>
           </div>
