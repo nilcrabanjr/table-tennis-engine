@@ -1,126 +1,208 @@
 import {
-  createDefaultCountryPlayerPool,
-  createDefaultCountryRecords,
-  createDefaultDomesticCompetition,
-  createDefaultNationalTeamProfile,
+  createDefaultCountry,
   describeRating,
-  validateCountryPlayerPool,
-  validateCountryRecords,
-  validateDomesticCompetition,
-  validateNationalTeams,
+  getCountryDisplayName,
+  validateCountry,
 } from "../domain";
 
 export function HomePage() {
-  const countryId = "country-melvaria";
+  const country = createDefaultCountry(
+    "country-melvaria",
+  );
 
-  const domestic =
-    createDefaultDomesticCompetition(countryId);
+  country.identity.officialName =
+    "Republic of Melvaria";
 
-  const nationalTeams =
-    createDefaultNationalTeamProfile(countryId);
+  country.identity.shortName =
+    "Melvaria";
 
-  const playerPool =
-    createDefaultCountryPlayerPool();
+  country.identity.adjective =
+    "Melvarian";
 
-  const records =
-    createDefaultCountryRecords();
+  country.identity.threeLetterCode =
+    "MEL";
 
-  if (domestic.primaryLeague) {
-    domestic.primaryLeague.name =
+  country.identity.twoLetterCode =
+    "MV";
+
+  country.identity.capital =
+    "Aurelis";
+
+  country.geography.region =
+    "Central Avium";
+
+  country.geography.areaSquareKm =
+    425_000;
+
+  country.demographics.population =
+    38_500_000;
+
+  country.demographics.registeredTableTennisPlayers =
+    180_000;
+
+  country.federation.name =
+    "Melvarian Table Tennis Federation";
+
+  country.federation.abbreviation =
+    "MTTF";
+
+  country.federation.foundedYear =
+    1928;
+
+  country.federation.reputation =
+    86;
+
+  country.coaching.technicalCoaching =
+    91;
+
+  country.coaching.serveDevelopment =
+    94;
+
+  country.coaching.tacticalCoaching =
+    88;
+
+  country.development.youthAcademies =
+    93;
+
+  country.development.scoutingNetwork =
+    91;
+
+  country.development.pathwayToProfessional =
+    90;
+
+  country.culture.tableTennisPopularity =
+    94;
+
+  country.culture.governmentSupport =
+    87;
+
+  country.culture.internationalAmbition =
+    95;
+
+  if (country.domesticCompetition.primaryLeague) {
+    country.domesticCompetition.primaryLeague.name =
       "Melvarian Premier Table Tennis League";
 
-    domestic.primaryLeague.shortName = "MPTTL";
-    domestic.primaryLeague.clubCount = 16;
-    domestic.primaryLeague.divisionCount = 2;
+    country.domesticCompetition.primaryLeague.shortName =
+      "MPTTL";
 
-    domestic.primaryLeague.professionalism = 91;
-    domestic.primaryLeague.competitiveStrength = 88;
-    domestic.primaryLeague.internationalPrestige = 84;
-    domestic.primaryLeague.matchIntensity = 90;
+    country.domesticCompetition.primaryLeague.clubCount =
+      16;
+
+    country.domesticCompetition.primaryLeague.competitiveStrength =
+      88;
+
+    country.domesticCompetition.primaryLeague.professionalism =
+      91;
   }
 
-  domestic.nationalChampionship.name =
+  country.domesticCompetition.nationalChampionship.name =
     "Melvarian National Championships";
 
-  domestic.nationalChampionship.prestige = 92;
-  domestic.juniorCompetitionQuality = 90;
-  domestic.annualDomesticMatchVolume = 4_800;
+  country.domesticCompetition.nationalChampionship.prestige =
+    92;
 
-  nationalTeams.selectionQuality = 89;
-  nationalTeams.trainingCampQuality = 91;
-  nationalTeams.doublesPreparation = 86;
-  nationalTeams.travelSupport = 83;
+  country.domesticCompetition.juniorCompetitionQuality =
+    90;
 
-  const primarySquad = nationalTeams.squads[0];
+  country.playerPool.registeredPlayerIds = [
+    "player-varek",
+    "player-seran",
+    "player-kolos",
+  ];
+
+  country.playerPool.internationallyEligiblePlayerIds = [
+    "player-varek",
+    "player-seran",
+    "player-kolos",
+  ];
+
+  country.playerPool.prospectPlayerIds = [
+    "player-kolos",
+  ];
+
+  country.playerPool.playerPoolDepth =
+    88;
+
+  country.playerPool.elitePlayerDepth =
+    84;
+
+  country.playerPool.youthProspectQuality =
+    92;
+
+  country.playerPool.unmodelledCompetitivePlayers =
+    24_000;
+
+  const primarySquad =
+    country.nationalTeams.squads[0];
 
   if (primarySquad) {
-    primarySquad.name = "Melvaria National Team";
-    primarySquad.cohesion = 84;
-    primarySquad.tacticalPreparation = 91;
-    primarySquad.morale = 88;
-    primarySquad.depth = 87;
+    primarySquad.name =
+      "Melvaria National Team";
+
+    primarySquad.playerIds = [
+      "player-varek",
+      "player-seran",
+      "player-kolos",
+    ];
+
+    primarySquad.captainPlayerId =
+      "player-varek";
+
+    primarySquad.cohesion =
+      84;
+
+    primarySquad.tacticalPreparation =
+      91;
+
+    primarySquad.morale =
+      88;
+
+    primarySquad.depth =
+      87;
   }
 
-  playerPool.registeredPlayerIds = [
-    "player-varek",
-    "player-seran",
-    "player-kolos",
-  ];
+  country.records.internationalTeamMatchesPlayed =
+    120;
 
-  playerPool.internationallyEligiblePlayerIds = [
-    "player-varek",
-    "player-seran",
-    "player-kolos",
-  ];
+  country.records.internationalTeamMatchesWon =
+    83;
 
-  playerPool.prospectPlayerIds = [
-    "player-kolos",
-  ];
+  country.records.internationalTeamMatchesLost =
+    37;
 
-  playerPool.playerPoolDepth = 88;
-  playerPool.elitePlayerDepth = 84;
-  playerPool.youthProspectQuality = 92;
-  playerPool.unmodelledCompetitivePlayers = 24_000;
+  country.records.individualWorldTitles =
+    8;
 
-  records.internationalTeamMatchesPlayed = 120;
-  records.internationalTeamMatchesWon = 83;
-  records.internationalTeamMatchesLost = 37;
+  country.records.doublesWorldTitles =
+    4;
 
-  records.individualWorldTitles = 8;
-  records.doublesWorldTitles = 4;
-  records.teamWorldTitles = 6;
+  country.records.teamWorldTitles =
+    6;
 
-  records.medals.gold = 18;
-  records.medals.silver = 12;
-  records.medals.bronze = 15;
+  country.records.medals.gold =
+    18;
 
-  records.highestWorldTeamRanking = 1;
-  records.longestTeamWinningStreak = 19;
+  country.records.medals.silver =
+    12;
 
-  const domesticValidation =
-    validateDomesticCompetition(domestic);
+  country.records.medals.bronze =
+    15;
 
-  const nationalTeamValidation =
-    validateNationalTeams(nationalTeams);
+  country.records.highestWorldTeamRanking =
+    1;
 
-  const playerPoolValidation =
-    validateCountryPlayerPool(playerPool);
+  country.records.longestTeamWinningStreak =
+    19;
 
-  const recordsValidation =
-    validateCountryRecords(records);
+  country.records.mostCappedPlayerId =
+    "player-varek";
 
-  const valid =
-    domesticValidation.valid
-    && nationalTeamValidation.valid
-    && playerPoolValidation.valid
-    && recordsValidation.valid;
+  country.records.mostSuccessfulPlayerId =
+    "player-varek";
 
-  const errors = [
-    ...domesticValidation.errors,
-    ...nationalTeamValidation.errors,
-    ...playerPoolValidation.errors,
-    ...recordsValidation.errors,
-  ];
+  const validation =
+    validateCountry(country);
 
   return (
     <section className="page">
@@ -132,78 +214,105 @@ export function HomePage() {
       </p>
 
       <div className="placeholder-panel">
-        <h2>Country competition system</h2>
+        <h2>Complete country model</h2>
 
         <p>
-          Domestic leagues, national teams, player pools, and country
-          records are now represented.
+          Identity, demographics, federation, coaching, development,
+          culture, competitions, squads, player pools, and records are
+          now combined into one country entity.
         </p>
 
         <dl>
-          <dt>System valid</dt>
-          <dd>{valid ? "Yes" : "No"}</dd>
+          <dt>Country valid</dt>
+          <dd>{validation.valid ? "Yes" : "No"}</dd>
 
-          <dt>Primary league</dt>
-          <dd>{domestic.primaryLeague?.name ?? "None"}</dd>
+          <dt>Country</dt>
+          <dd>{getCountryDisplayName(country.identity)}</dd>
 
-          <dt>League clubs</dt>
-          <dd>{domestic.primaryLeague?.clubCount ?? 0}</dd>
+          <dt>Official name</dt>
+          <dd>{country.identity.officialName}</dd>
 
-          <dt>League strength</dt>
+          <dt>Federation</dt>
+          <dd>{country.federation.name}</dd>
+
+          <dt>Technical coaching</dt>
           <dd>
-            {domestic.primaryLeague?.competitiveStrength ?? 0}
+            {country.coaching.technicalCoaching}
             {" — "}
             {describeRating(
-              domestic.primaryLeague?.competitiveStrength ?? 0,
+              country.coaching.technicalCoaching,
             )}
           </dd>
 
-          <dt>National championship</dt>
-          <dd>{domestic.nationalChampionship.name}</dd>
-
-          <dt>Junior competition</dt>
+          <dt>Youth academies</dt>
           <dd>
-            {domestic.juniorCompetitionQuality}
+            {country.development.youthAcademies}
             {" — "}
-            {describeRating(domestic.juniorCompetitionQuality)}
+            {describeRating(
+              country.development.youthAcademies,
+            )}
+          </dd>
+
+          <dt>Table tennis popularity</dt>
+          <dd>
+            {country.culture.tableTennisPopularity}
+            {" — "}
+            {describeRating(
+              country.culture.tableTennisPopularity,
+            )}
+          </dd>
+
+          <dt>Primary league</dt>
+          <dd>
+            {country.domesticCompetition.primaryLeague?.name
+              ?? "None"}
+          </dd>
+
+          <dt>League strength</dt>
+          <dd>
+            {country.domesticCompetition.primaryLeague
+              ?.competitiveStrength ?? 0}
+            {" — "}
+            {describeRating(
+              country.domesticCompetition.primaryLeague
+                ?.competitiveStrength ?? 0,
+            )}
           </dd>
 
           <dt>National squad</dt>
           <dd>{primarySquad?.name ?? "None"}</dd>
 
-          <dt>Squad tactical preparation</dt>
-          <dd>
-            {primarySquad?.tacticalPreparation ?? 0}
-            {" — "}
-            {describeRating(
-              primarySquad?.tacticalPreparation ?? 0,
-            )}
-          </dd>
+          <dt>Squad players</dt>
+          <dd>{primarySquad?.playerIds.length ?? 0}</dd>
 
-          <dt>Modelled players</dt>
-          <dd>{playerPool.registeredPlayerIds.length}</dd>
+          <dt>Registered player records</dt>
+          <dd>{country.playerPool.registeredPlayerIds.length}</dd>
 
-          <dt>Competitive player pool</dt>
+          <dt>Unmodelled competitive players</dt>
           <dd>
-            {playerPool.unmodelledCompetitivePlayers.toLocaleString()}
+            {country.playerPool.unmodelledCompetitivePlayers
+              .toLocaleString()}
           </dd>
 
           <dt>World singles titles</dt>
-          <dd>{records.individualWorldTitles}</dd>
+          <dd>{country.records.individualWorldTitles}</dd>
 
           <dt>Team world titles</dt>
-          <dd>{records.teamWorldTitles}</dd>
+          <dd>{country.records.teamWorldTitles}</dd>
 
           <dt>Highest team ranking</dt>
-          <dd>{records.highestWorldTeamRanking ?? "Unranked"}</dd>
+          <dd>
+            {country.records.highestWorldTeamRanking
+              ?? "Unranked"}
+          </dd>
         </dl>
 
-        {!valid && (
+        {!validation.valid && (
           <div>
             <h3>Validation errors</h3>
 
             <ul>
-              {errors.map((error) => (
+              {validation.errors.map((error) => (
                 <li key={`${error.path}-${error.message}`}>
                   {error.path}: {error.message}
                 </li>

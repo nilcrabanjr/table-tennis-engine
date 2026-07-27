@@ -15,3 +15,6 @@ export * from "./DomesticCompetitionProfile";
 export * from "./NationalTeamProfile";
 export * from "./countryCompetitionDefaults";
 export * from "./countryCompetitionValidation";
+export * from "./Country";
+export * from "./completeCountryDefaults";
+export * from "./completeCountryValidation";
