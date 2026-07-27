@@ -1,208 +1,40 @@
 import {
-  createDefaultCountry,
+  BUILT_IN_PLAYSTYLES,
+  CLASSIC_DEFENDER,
+  FOREHAND_ATTACKER,
   describeRating,
-  getCountryDisplayName,
-  validateCountry,
+  validatePlaystyle,
 } from "../domain";
 
 export function HomePage() {
-  const country = createDefaultCountry(
-    "country-melvaria",
-  );
+  const defenderValidation =
+    validatePlaystyle(CLASSIC_DEFENDER);
 
-  country.identity.officialName =
-    "Republic of Melvaria";
+  const attackerValidation =
+    validatePlaystyle(FOREHAND_ATTACKER);
 
-  country.identity.shortName =
-    "Melvaria";
+  const valid =
+    defenderValidation.valid
+    && attackerValidation.valid;
 
-  country.identity.adjective =
-    "Melvarian";
+  const defenderMatchup =
+    CLASSIC_DEFENDER.matchups.find(
+      (matchup) =>
+        matchup.opponentPlaystyleId
+        === FOREHAND_ATTACKER.id,
+    );
 
-  country.identity.threeLetterCode =
-    "MEL";
+  const attackerMatchup =
+    FOREHAND_ATTACKER.matchups.find(
+      (matchup) =>
+        matchup.opponentPlaystyleId
+        === CLASSIC_DEFENDER.id,
+    );
 
-  country.identity.twoLetterCode =
-    "MV";
-
-  country.identity.capital =
-    "Aurelis";
-
-  country.geography.region =
-    "Central Avium";
-
-  country.geography.areaSquareKm =
-    425_000;
-
-  country.demographics.population =
-    38_500_000;
-
-  country.demographics.registeredTableTennisPlayers =
-    180_000;
-
-  country.federation.name =
-    "Melvarian Table Tennis Federation";
-
-  country.federation.abbreviation =
-    "MTTF";
-
-  country.federation.foundedYear =
-    1928;
-
-  country.federation.reputation =
-    86;
-
-  country.coaching.technicalCoaching =
-    91;
-
-  country.coaching.serveDevelopment =
-    94;
-
-  country.coaching.tacticalCoaching =
-    88;
-
-  country.development.youthAcademies =
-    93;
-
-  country.development.scoutingNetwork =
-    91;
-
-  country.development.pathwayToProfessional =
-    90;
-
-  country.culture.tableTennisPopularity =
-    94;
-
-  country.culture.governmentSupport =
-    87;
-
-  country.culture.internationalAmbition =
-    95;
-
-  if (country.domesticCompetition.primaryLeague) {
-    country.domesticCompetition.primaryLeague.name =
-      "Melvarian Premier Table Tennis League";
-
-    country.domesticCompetition.primaryLeague.shortName =
-      "MPTTL";
-
-    country.domesticCompetition.primaryLeague.clubCount =
-      16;
-
-    country.domesticCompetition.primaryLeague.competitiveStrength =
-      88;
-
-    country.domesticCompetition.primaryLeague.professionalism =
-      91;
-  }
-
-  country.domesticCompetition.nationalChampionship.name =
-    "Melvarian National Championships";
-
-  country.domesticCompetition.nationalChampionship.prestige =
-    92;
-
-  country.domesticCompetition.juniorCompetitionQuality =
-    90;
-
-  country.playerPool.registeredPlayerIds = [
-    "player-varek",
-    "player-seran",
-    "player-kolos",
+  const errors = [
+    ...defenderValidation.errors,
+    ...attackerValidation.errors,
   ];
-
-  country.playerPool.internationallyEligiblePlayerIds = [
-    "player-varek",
-    "player-seran",
-    "player-kolos",
-  ];
-
-  country.playerPool.prospectPlayerIds = [
-    "player-kolos",
-  ];
-
-  country.playerPool.playerPoolDepth =
-    88;
-
-  country.playerPool.elitePlayerDepth =
-    84;
-
-  country.playerPool.youthProspectQuality =
-    92;
-
-  country.playerPool.unmodelledCompetitivePlayers =
-    24_000;
-
-  const primarySquad =
-    country.nationalTeams.squads[0];
-
-  if (primarySquad) {
-    primarySquad.name =
-      "Melvaria National Team";
-
-    primarySquad.playerIds = [
-      "player-varek",
-      "player-seran",
-      "player-kolos",
-    ];
-
-    primarySquad.captainPlayerId =
-      "player-varek";
-
-    primarySquad.cohesion =
-      84;
-
-    primarySquad.tacticalPreparation =
-      91;
-
-    primarySquad.morale =
-      88;
-
-    primarySquad.depth =
-      87;
-  }
-
-  country.records.internationalTeamMatchesPlayed =
-    120;
-
-  country.records.internationalTeamMatchesWon =
-    83;
-
-  country.records.internationalTeamMatchesLost =
-    37;
-
-  country.records.individualWorldTitles =
-    8;
-
-  country.records.doublesWorldTitles =
-    4;
-
-  country.records.teamWorldTitles =
-    6;
-
-  country.records.medals.gold =
-    18;
-
-  country.records.medals.silver =
-    12;
-
-  country.records.medals.bronze =
-    15;
-
-  country.records.highestWorldTeamRanking =
-    1;
-
-  country.records.longestTeamWinningStreak =
-    19;
-
-  country.records.mostCappedPlayerId =
-    "player-varek";
-
-  country.records.mostSuccessfulPlayerId =
-    "player-varek";
-
-  const validation =
-    validateCountry(country);
 
   return (
     <section className="page">
@@ -214,105 +46,97 @@ export function HomePage() {
       </p>
 
       <div className="placeholder-panel">
-        <h2>Complete country model</h2>
+        <h2>Playstyle system</h2>
 
         <p>
-          Identity, demographics, federation, coaching, development,
-          culture, competitions, squads, player pools, and records are
-          now combined into one country entity.
+          Playstyles now define shot selection, preferred distance,
+          aggression, rally behaviour, placement, physical demand,
+          and matchup comfort.
         </p>
 
         <dl>
-          <dt>Country valid</dt>
-          <dd>{validation.valid ? "Yes" : "No"}</dd>
+          <dt>System valid</dt>
+          <dd>{valid ? "Yes" : "No"}</dd>
 
-          <dt>Country</dt>
-          <dd>{getCountryDisplayName(country.identity)}</dd>
+          <dt>Built-in playstyles</dt>
+          <dd>{BUILT_IN_PLAYSTYLES.length}</dd>
 
-          <dt>Official name</dt>
-          <dd>{country.identity.officialName}</dd>
+          <dt>Defender style</dt>
+          <dd>{CLASSIC_DEFENDER.name}</dd>
 
-          <dt>Federation</dt>
-          <dd>{country.federation.name}</dd>
+          <dt>Preferred distance</dt>
+          <dd>{CLASSIC_DEFENDER.preferredDistance}</dd>
 
-          <dt>Technical coaching</dt>
+          <dt>Defensive patience</dt>
           <dd>
-            {country.coaching.technicalCoaching}
+            {CLASSIC_DEFENDER.defensivePatience}
             {" — "}
             {describeRating(
-              country.coaching.technicalCoaching,
+              CLASSIC_DEFENDER.defensivePatience,
             )}
           </dd>
 
-          <dt>Youth academies</dt>
+          <dt>Rally preference</dt>
           <dd>
-            {country.development.youthAcademies}
+            {CLASSIC_DEFENDER.rallyLengthPreference}
             {" — "}
             {describeRating(
-              country.development.youthAcademies,
+              CLASSIC_DEFENDER.rallyLengthPreference,
             )}
           </dd>
 
-          <dt>Table tennis popularity</dt>
+          <dt>Preferred defender shot</dt>
           <dd>
-            {country.culture.tableTennisPopularity}
-            {" — "}
-            {describeRating(
-              country.culture.tableTennisPopularity,
-            )}
-          </dd>
-
-          <dt>Primary league</dt>
-          <dd>
-            {country.domesticCompetition.primaryLeague?.name
+            {CLASSIC_DEFENDER.shotPreferences[0]?.shotType
               ?? "None"}
           </dd>
 
-          <dt>League strength</dt>
+          <dt>Attacker style</dt>
+          <dd>{FOREHAND_ATTACKER.name}</dd>
+
+          <dt>Attacker aggression</dt>
           <dd>
-            {country.domesticCompetition.primaryLeague
-              ?.competitiveStrength ?? 0}
+            {FOREHAND_ATTACKER.aggression}
             {" — "}
             {describeRating(
-              country.domesticCompetition.primaryLeague
-                ?.competitiveStrength ?? 0,
+              FOREHAND_ATTACKER.aggression,
             )}
           </dd>
 
-          <dt>National squad</dt>
-          <dd>{primarySquad?.name ?? "None"}</dd>
-
-          <dt>Squad players</dt>
-          <dd>{primarySquad?.playerIds.length ?? 0}</dd>
-
-          <dt>Registered player records</dt>
-          <dd>{country.playerPool.registeredPlayerIds.length}</dd>
-
-          <dt>Unmodelled competitive players</dt>
+          <dt>Attacker initiative</dt>
           <dd>
-            {country.playerPool.unmodelledCompetitivePlayers
-              .toLocaleString()}
+            {FOREHAND_ATTACKER.initiativeSeeking}
+            {" — "}
+            {describeRating(
+              FOREHAND_ATTACKER.initiativeSeeking,
+            )}
           </dd>
 
-          <dt>World singles titles</dt>
-          <dd>{country.records.individualWorldTitles}</dd>
-
-          <dt>Team world titles</dt>
-          <dd>{country.records.teamWorldTitles}</dd>
-
-          <dt>Highest team ranking</dt>
+          <dt>Defender comfort vs attacker</dt>
           <dd>
-            {country.records.highestWorldTeamRanking
-              ?? "Unranked"}
+            {defenderMatchup?.comfort ?? 50}
+            {" — "}
+            {describeRating(
+              defenderMatchup?.comfort ?? 50,
+            )}
+          </dd>
+
+          <dt>Attacker comfort vs defender</dt>
+          <dd>
+            {attackerMatchup?.comfort ?? 50}
+            {" — "}
+            {describeRating(
+              attackerMatchup?.comfort ?? 50,
+            )}
           </dd>
         </dl>
 
-        {!validation.valid && (
+        {!valid && (
           <div>
             <h3>Validation errors</h3>
 
             <ul>
-              {validation.errors.map((error) => (
+              {errors.map((error) => (
                 <li key={`${error.path}-${error.message}`}>
                   {error.path}: {error.message}
                 </li>
