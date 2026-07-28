@@ -1,147 +1,82 @@
 import {
-  BUILT_IN_PLAYSTYLES,
-  CLASSIC_DEFENDER,
-  FOREHAND_ATTACKER,
-  describeRating,
-  validatePlaystyle,
+  runDomainAudit,
 } from "../domain";
 
 export function HomePage() {
-  const defenderValidation =
-    validatePlaystyle(CLASSIC_DEFENDER);
+  const audit = runDomainAudit();
 
-  const attackerValidation =
-    validatePlaystyle(FOREHAND_ATTACKER);
-
-  const valid =
-    defenderValidation.valid
-    && attackerValidation.valid;
-
-  const defenderMatchup =
-    CLASSIC_DEFENDER.matchups.find(
-      (matchup) =>
-        matchup.opponentPlaystyleId
-        === FOREHAND_ATTACKER.id,
-    );
-
-  const attackerMatchup =
-    FOREHAND_ATTACKER.matchups.find(
-      (matchup) =>
-        matchup.opponentPlaystyleId
-        === CLASSIC_DEFENDER.id,
-    );
-
-  const errors = [
-    ...defenderValidation.errors,
-    ...attackerValidation.errors,
-  ];
+  const failedItems = audit.items.filter(
+    (item) => !item.valid,
+  );
 
   return (
     <section className="page">
       <h1>Table Tennis Engine</h1>
 
       <p>
-        Create fictional countries, players, equipment, tournaments,
-        and detailed table tennis matches.
+        Stage 2 domain cleanup and consistency audit.
       </p>
 
       <div className="placeholder-panel">
-        <h2>Playstyle system</h2>
+        <h2>Domain audit</h2>
 
         <p>
-          Playstyles now define shot selection, preferred distance,
-          aggression, rally behaviour, placement, physical demand,
-          and matchup comfort.
+          All major domain defaults and built-in presets are being
+          validated together before simulation development begins.
         </p>
 
         <dl>
-          <dt>System valid</dt>
-          <dd>{valid ? "Yes" : "No"}</dd>
+          <dt>Audit passed</dt>
+          <dd>{audit.valid ? "Yes" : "No"}</dd>
 
-          <dt>Built-in playstyles</dt>
-          <dd>{BUILT_IN_PLAYSTYLES.length}</dd>
+          <dt>Systems checked</dt>
+          <dd>{audit.checkedSystems}</dd>
 
-          <dt>Defender style</dt>
-          <dd>{CLASSIC_DEFENDER.name}</dd>
+          <dt>Total errors</dt>
+          <dd>{audit.totalErrors}</dd>
 
-          <dt>Preferred distance</dt>
-          <dd>{CLASSIC_DEFENDER.preferredDistance}</dd>
-
-          <dt>Defensive patience</dt>
+          <dt>Valid systems</dt>
           <dd>
-            {CLASSIC_DEFENDER.defensivePatience}
-            {" — "}
-            {describeRating(
-              CLASSIC_DEFENDER.defensivePatience,
-            )}
+            {
+              audit.items.filter(
+                (item) => item.valid,
+              ).length
+            }
           </dd>
 
-          <dt>Rally preference</dt>
-          <dd>
-            {CLASSIC_DEFENDER.rallyLengthPreference}
-            {" — "}
-            {describeRating(
-              CLASSIC_DEFENDER.rallyLengthPreference,
-            )}
-          </dd>
-
-          <dt>Preferred defender shot</dt>
-          <dd>
-            {CLASSIC_DEFENDER.shotPreferences[0]?.shotType
-              ?? "None"}
-          </dd>
-
-          <dt>Attacker style</dt>
-          <dd>{FOREHAND_ATTACKER.name}</dd>
-
-          <dt>Attacker aggression</dt>
-          <dd>
-            {FOREHAND_ATTACKER.aggression}
-            {" — "}
-            {describeRating(
-              FOREHAND_ATTACKER.aggression,
-            )}
-          </dd>
-
-          <dt>Attacker initiative</dt>
-          <dd>
-            {FOREHAND_ATTACKER.initiativeSeeking}
-            {" — "}
-            {describeRating(
-              FOREHAND_ATTACKER.initiativeSeeking,
-            )}
-          </dd>
-
-          <dt>Defender comfort vs attacker</dt>
-          <dd>
-            {defenderMatchup?.comfort ?? 50}
-            {" — "}
-            {describeRating(
-              defenderMatchup?.comfort ?? 50,
-            )}
-          </dd>
-
-          <dt>Attacker comfort vs defender</dt>
-          <dd>
-            {attackerMatchup?.comfort ?? 50}
-            {" — "}
-            {describeRating(
-              attackerMatchup?.comfort ?? 50,
-            )}
-          </dd>
+          <dt>Failed systems</dt>
+          <dd>{failedItems.length}</dd>
         </dl>
 
-        {!valid && (
+        <h3>Audit results</h3>
+
+        <ul>
+          {audit.items.map((item) => (
+            <li key={item.name}>
+              <strong>{item.name}</strong>
+              {": "}
+              {item.valid
+                ? "Valid"
+                : `${item.errorCount} error(s)`}
+            </li>
+          ))}
+        </ul>
+
+        {failedItems.length > 0 && (
           <div>
             <h3>Validation errors</h3>
 
-            <ul>
-              {errors.map((error) => (
-                <li key={`${error.path}-${error.message}`}>
-                  {error.path}: {error.message}
-                </li>
-              ))}
-            </ul>
+            {failedItems.map((item) => (
+              <div key={item.name}>
+                <h4>{item.name}</h4>
+
+                <ul>
+                  {item.errors.map((error) => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         )}
       </div>
